@@ -2,6 +2,8 @@
 using System.IO;
 using System.Timers;
 using UnityEngine;
+using UnityEngine.PostProcessing; //added for shading (post processing effect) 
+
 
 public class FizzyoDevice : MonoBehaviour
 {
@@ -80,7 +82,34 @@ public class FizzyoDevice : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
 
+    [RequireComponent(typeof(PostProcessingBehaviour))]
+    public class AnimationDemo : MonoBehaviour
+    {
+        PostProcessingProfile m_Profile;
+
+        void OnEnable()
+        {
+            var behaviour = GetComponent<PostProcessingBehaviour>();
+
+            if (behaviour.profile == null)
+            {
+                enabled = false;
+                return;
+            }
+
+            m_Profile = Instantiate(behaviour.profile);
+            behaviour.profile = m_Profile;
+        }
+
+        void Update()
+        {
+            var ColourGrading = m_Profile.colorGrading.settings;
+            ColourGrading.tonemapping.neutralWhiteLevel = Mathf.Abs(Mathf.Sin(Time.realtimeSinceStartup) * 0.99f) + 0.01f;
+            m_Profile.colorGrading.settings = ColourGrading;
+        }
     }
 
     /// <summary>
@@ -89,6 +118,7 @@ public class FizzyoDevice : MonoBehaviour
     /// <returns>pressure data reported from device or log file with a range of -1 - 1.</returns>
     public float Pressure()
     {
+
         if (useRecordedData)
         {
             return pressure;
