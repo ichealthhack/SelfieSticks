@@ -15,8 +15,8 @@ public class pressToStart : MonoBehaviour {
 
 		if (Input.GetButtonDown ("Fire1")) {
 		
-			//SceneManager.LoadScene ("playGame");
-			AutoFade.LoadLevel("playGame" ,3,1,Color.black);
+			SceneManager.LoadScene ("playGame");
+
 		}
 
 	}
