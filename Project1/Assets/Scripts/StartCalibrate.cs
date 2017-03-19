@@ -9,12 +9,12 @@ public class StartCalibrate : MonoBehaviour {
     public Slider slider;
 
     //private
-    private float maxPressureReading = 0;
-    private float minPressureThreshold = 0.1f;
+    static public float maxPressureReading = 0;
+    static private float minPressureThreshold = 0.1f;
 
-    private System.Diagnostics.Stopwatch blowingStopwatch;
-    private int countdownToStart = 3;
-    private float smoothing = 0.00001f;
+    static private System.Diagnostics.Stopwatch blowingStopwatch;
+    static private int countdownToStart = 3;
+    static private float smoothing = 0.00001f;
 
     // Use this for initialization
     void Start () {
@@ -42,7 +42,7 @@ public class StartCalibrate : MonoBehaviour {
             }else{
                 //Save the max recorded pressure to use to scale sensor input during gameplay.
                 PlayerPrefs.SetFloat("Max Fizzyo Pressure", maxPressureReading);
-                SceneManager.LoadScene("JetpackLevel");
+                SceneManager.LoadScene("playGame");
             }
         }
         else
